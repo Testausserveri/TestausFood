@@ -1,0 +1,35 @@
+{
+  "name": "testausfood",
+  "description": "A food delivery application, but good, and open source",
+  "version": "1.0.0",
+  "main": "src/index.js",
+  "type": "module",
+  "maintainers": [
+    {
+      "name": "raikasdev",
+      "email": "raikas@testausserveri.fi",
+      "web": "https://raikas.xyz"
+    }
+  ],
+  "bugs": {
+    "web": "https://github.com/testausserveri/testausfood/issues"
+  },
+  "repositories": [
+    {
+      "type": "git",
+      "url": "https://github.com/testausserveri/testausfood"
+    }
+  ],
+  "dependencies": {
+    "bcrypt": "^5.0.1",
+    "cookie-parser": "^1.4.5",
+    "cors": "^2.8.5",
+    "csurf": "^1.11.0",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "express-bearer-token": "^2.4.0",
+    "helmet": "^4.5.0",
+    "mongoose": "^5.12.5",
+    "njwt": "^1.0.0"
+  }
+}
