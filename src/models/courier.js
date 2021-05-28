@@ -3,8 +3,10 @@
 import mongoose from 'mongoose';
 
 const courier = new mongoose.Schema({
-  username: String,
-  password: String,
+  username: { type: String, required: true },
+  password: { type: String, required: true },
+  image: { type: String, required: true },
+  blurhash: String,
   activeOrder: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Order',
@@ -16,6 +18,11 @@ const courier = new mongoose.Schema({
     }
   ],
   location: [Number]
+});
+
+courier.pre('save', async function (next) {
+  if (!this.blurhash) this.blurhash = await toBlurhash(this.image);
+  next();
 });
 
 courier.methods.calculateReviewAverage = function () {

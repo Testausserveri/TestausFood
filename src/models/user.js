@@ -4,7 +4,6 @@ import mongoose from 'mongoose';
 
 const user = new mongoose.Schema({
   username: String,
-  avatar: String,
   password: String,
   favourites: [{
     type: mongoose.Schema.Types.ObjectId,

@@ -17,6 +17,7 @@ router.get('/list', async (req, res) => {
     listOfRestaurants.push({
       name: restaurant.name,
       image: restaurant.image,
+      blurhash: restaurant.blurhash,
       id: restaurant.id,
       location: {
         coordinates: restaurant.location.coordinates,
@@ -25,11 +26,37 @@ router.get('/list', async (req, res) => {
       },
       deliveryOptions: restaurant.deliveryOptions,
       tags: restaurant.tags,
-      reviews: restaurant.reviews,
       averageReview: await restaurant.calculateReviewAverage(),
     })
   }));
   res.json(listOfRestaurants);
+});
+
+/*
+ * Gets information about certain restaurant
+ */
+router.get('/:id/info', async (req, res) => {
+  const restaurant = await Restaurant.findOne({ id: req.params.id }).exec();
+  const menu = [];
+  await Promise.all(restaurant.menu.map(async (menuItemId) => {
+    menu.push(documentJson(await MenuItem.findById(menuItemId)));
+  }));
+  res.json({
+    name: restaurant.name,
+    image: restaurant.image,
+    blurhash: restaurant.blurhash,
+    id: restaurant.id,
+    menu,
+    location: {
+      coordinates: restaurant.location.coordinates,
+      streetAddress: restaurant.location.streetAddress,
+      city: documentJson(await City.findById(restaurant.location.city).exec())
+    },
+    deliveryOptions: restaurant.deliveryOptions,
+    tags: restaurant.tags,
+    reviews: restaurant.reviews,
+    averageReview: await restaurant.calculateReviewAverage(),
+  });
 });
 
 // Admin section, move to somewhere else soon
